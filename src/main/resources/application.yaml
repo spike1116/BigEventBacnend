@@ -1,1 +1,2 @@
-spring.application.name=BigEventBackend
+server:
+  port: 8081
