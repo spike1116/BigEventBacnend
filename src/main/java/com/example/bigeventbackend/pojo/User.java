@@ -1,6 +1,8 @@
 package com.example.bigeventbackend.pojo;
 
 import lombok.Data;
+import net.minidev.json.annotate.JsonIgnore;
+import org.springframework.web.bind.annotation.Mapping;
 
 import java.time.LocalDateTime;
 
@@ -8,6 +10,7 @@ import java.time.LocalDateTime;
 public class User {
     private Integer id;//主键ID
     private String username;//用户名
+    @JsonIgnore//序列化的时候忽略这个字段
     private String password;//密码
     private String nickname;//昵称
     private String email;//邮箱
