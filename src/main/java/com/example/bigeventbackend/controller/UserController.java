@@ -6,6 +6,7 @@ import com.example.bigeventbackend.service.UserService;
 import com.example.bigeventbackend.service.impl.UserServiceImpl;
 import com.example.bigeventbackend.utils.JwtUtils;
 import com.example.bigeventbackend.utils.Md5Util;
+import com.example.bigeventbackend.utils.ThreadLocalUtil;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -50,7 +51,9 @@ public class UserController {
 
     @GetMapping("/userInfo")
     public Result<User> getUserInfo(@RequestHeader(name = "Authorization") String token){
-        Map<String, Object> userToken = JwtUtils.parseToken(token); //通过解析Jwt Token来获取用户名
+//        Map<String, Object> userToken = JwtUtils.parseToken(token); //通过解析Jwt Token来获取用户名
+        Map<String,Object> userToken = ThreadLocalUtil.get();
+
         String username = (String)userToken.get("username");
         User user = userService.findByUserName(username);
         return Result.success(user);
