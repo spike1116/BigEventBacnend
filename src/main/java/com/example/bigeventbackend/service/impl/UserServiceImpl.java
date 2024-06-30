@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.bigeventbackend.utils.*;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -36,5 +37,15 @@ public class UserServiceImpl implements UserService {
         user.setUpdateTime(LocalDateTime.now());
 
         userMapper.update(user);
+    }
+
+    @Override
+    public void updateAvatar(String path,Integer id) {
+        userMapper.updateAvatar(path,id);
+    }
+
+    @Override
+    public void updatePassword(Integer id,String newPwd) {
+        userMapper.updatePassword(id,Md5Util.getMD5String(newPwd));
     }
 }
