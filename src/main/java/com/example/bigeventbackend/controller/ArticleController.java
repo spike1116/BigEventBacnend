@@ -2,7 +2,6 @@ package com.example.bigeventbackend.controller;
 
 
 import com.example.bigeventbackend.pojo.Result;
-import com.example.bigeventbackend.utils.JwtUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
