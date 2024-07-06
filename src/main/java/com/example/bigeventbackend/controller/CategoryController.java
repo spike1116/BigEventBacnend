@@ -50,4 +50,13 @@ public class CategoryController {
         categoryService.update(category);
         return Result.success();
     }
+
+    @DeleteMapping
+    public Result deleteById(@RequestParam Integer id){
+        if(categoryService.findById(id)!=null){
+            categoryService.deleteById(id);
+            return Result.success();
+        }
+        return Result.error("该分类不存在");
+    }
 }
