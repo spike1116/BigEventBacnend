@@ -1,4 +1,4 @@
-version: '3.8'
+version: '2.1'
 services:
   app:
     build: src/test/java
@@ -26,7 +26,7 @@ services:
       - ./src/main/resources/:/docker-entrypoint-initdb.d/
 
   redis:
-    image: redis:7.0
+    image: redis
     ports:
       - "6379:6379"
     volumes:
