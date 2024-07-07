@@ -3,7 +3,7 @@ FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /app
 
 # 将项目的源代码复制到容器中
-COPY src/test/java .
+COPY . .
 
 # 使用 Maven 构建项目
 RUN mvn clean package -DskipTests
@@ -13,7 +13,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # 从构建阶段复制生成的 jar 文件到运行阶段
-COPY --from=build /app/target/bigevent.jar .
+COPY --from=build /app/target/your-application.jar .
 
 # 暴露应用程序监听的端口
 EXPOSE 8080
