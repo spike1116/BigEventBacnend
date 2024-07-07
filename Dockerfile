@@ -3,7 +3,7 @@ FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /app
 
 # 将项目的源代码复制到容器中
-COPY . .
+COPY src/test/java .
 
 # 使用 Maven 构建项目
 RUN mvn clean package -DskipTests
