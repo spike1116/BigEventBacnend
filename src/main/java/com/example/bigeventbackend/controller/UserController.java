@@ -9,12 +9,15 @@ import com.example.bigeventbackend.utils.ThreadLocalUtil;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/user")
@@ -22,7 +25,11 @@ import java.util.Map;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
 
     @PostMapping("/register")
     public Result<User> register(@Pattern(regexp = "^\\S{5,16}$") String username, @Pattern(regexp = "^\\S{5,16}$") String password) {
@@ -45,6 +52,10 @@ public class UserController {
             claims.put("id", loginUser.getId());
             claims.put("username", loginUser.getUsername());
             String token = JwtUtils.genToken(claims);//登录时生成Token
+            ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
+
+            //把token存到Redis中
+            operations.set(token,token,12, TimeUnit.HOURS);
             return Result.success(token);
         }
         return Result.error("密码错误");
@@ -76,7 +87,7 @@ public class UserController {
     }
 
     @PatchMapping("/updatePassword")
-    public Result updatePassword(@RequestBody Map<String, String> params) {
+    public Result updatePassword(@RequestBody Map<String, String> params,@RequestHeader(name = "Authorization") String token) {
         String oldPwd = params.get("oldPwd");
         String newPwd = params.get("newPwd");
         String reNewPwd = params.get("reNewPwd");
@@ -94,7 +105,11 @@ public class UserController {
         } else if (!reNewPwd.equals(newPwd)) {
             return Result.error("两次输入的密码不一致");
         }
+        //改完密码后，删除redis中的token，这样登录校验就会失败。
+
         userService.updatePassword(id, newPwd);
+        ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
+        operations.getOperations().delete(token);
         return Result.success();
     }
 }

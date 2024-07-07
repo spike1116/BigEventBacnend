@@ -5,7 +5,6 @@ import com.example.bigeventbackend.pojo.Result;
 import com.example.bigeventbackend.service.CategoryService;
 import com.example.bigeventbackend.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
