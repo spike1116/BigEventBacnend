@@ -19,4 +19,4 @@ COPY --from=build /app/target/your-application.jar .
 EXPOSE 8080
 
 # 运行应用程序
-CMD ["java", "-jar", "your-application.jar"]
+CMD ["java", "-jar", "my-application.jar"]

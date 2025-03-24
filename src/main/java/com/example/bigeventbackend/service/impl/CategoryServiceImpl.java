@@ -27,9 +27,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> getAllCategory() {
-        Map<String,Object> claims = ThreadLocalUtil.get();
-        Integer id = (Integer) claims.get("id");
-        return categoryMapper.getAllCategory(id);
+        return categoryMapper.getAllCategory();
     }
 
     @Override
