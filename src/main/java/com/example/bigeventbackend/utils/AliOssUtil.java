@@ -14,9 +14,9 @@ public class AliOssUtil {
 
     private static final String ENDPOINT = "https://oss-cn-beijing.aliyuncs.com";
 
-    private static final String ACCESS_KEY_ID = "LTAI5tA6cbmvrCmZESQV6vXb";
+    private static final String ACCESS_KEY_ID = "YOUR_KEY_ID";
 
-    private static final String ACCESS_KEY_SECRET = "QjIBfqIhvOJlL6IHrsJqwHeJsVjWDv";
+    private static final String ACCESS_KEY_SECRET = "YOUR_KEY_SECRET";
 
     private static final String BUCKET_NAME = "spikebucket";
 
